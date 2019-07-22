@@ -1,6 +1,7 @@
 package com.hurko.model;
 
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.experimental.Accessors;
 
@@ -15,6 +16,7 @@ import java.util.List;
 @Entity
 @Setter
 @Getter
+@NoArgsConstructor
 @Table(name = "course")
 @Accessors(chain = true)
 public class CourseEntity extends CreatableEntity {

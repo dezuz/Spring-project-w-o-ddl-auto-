@@ -2,6 +2,7 @@ package com.hurko.model;
 
 import com.fasterxml.jackson.databind.ser.Serializers;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.experimental.Accessors;
 
@@ -14,8 +15,9 @@ import javax.persistence.Table;
 @Entity
 @Setter
 @Getter
-@Accessors(chain = true)
+@NoArgsConstructor
 @Table(name = "user")
+@Accessors(chain = true)
 public class UserEntity extends BaseEntity {
 
     @Column(name = "age")

@@ -1,5 +1,5 @@
-CREATE TABLE user (
-    id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+CREATE TABLE user_table (
+    id BIGSERIAL PRIMARY KEY,
     age INT NOT NULL,
     login VARCHAR(255) NOT NULL,
     name VARCHAR(255) NOT NULL,
@@ -7,30 +7,45 @@ CREATE TABLE user (
 );
 
 CREATE TABLE course (
-    id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
-    creation_date INT NOT NULL,
+    id BIGSERIAL PRIMARY KEY,
+    creation_date BIGINT,
     cost INT NOT NULL,
-    name VARCHAR(255) NOT NULL,
-    section_id INT FOREIGN KEY REFERENCES section(id)
-);
-
-CREATE TABLE comment (
-    id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
-    creation_date INT NOT NULL,
-    content VARCHAR(255) NOT NULL,
-    author_id INT
-);
-
-CREATE TABLE lesson (
-    id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
-    creation_date INT NOT NULL,
-    content VARCHAR(255) NOT NULL,
-    name VARCHAR(255) NOT NULL,
-    comment_id INT
+    name VARCHAR(255) NOT NULL
 );
 
 CREATE TABLE section (
-    id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
-    creation_date INT NOT NULL,
-    name VARCHAR(255) NOT NULL
+    id BIGSERIAL PRIMARY KEY,
+    creation_date BIGINT,
+    name VARCHAR(255) NOT NULL,
+    course_id BIGINT
 );
+
+CREATE TABLE lesson (
+    id BIGSERIAL PRIMARY KEY,
+    creation_date BIGINT,
+    content VARCHAR(255) NOT NULL,
+    name VARCHAR(255) NOT NULL,
+    section_id BIGINT
+);
+
+CREATE TABLE comment (
+    id BIGSERIAL PRIMARY KEY,
+    creation_date BIGINT,
+    content VARCHAR(255) NOT NULL,
+    author_id INT,
+    lesson_id BIGINT
+);
+
+ALTER TABLE comment
+    ADD CONSTRAINT fk_comment_id
+        FOREIGN KEY(lesson_id) REFERENCES lesson(id);
+
+ALTER TABLE section
+    ADD CONSTRAINT section_course_id_fk
+        FOREIGN KEY(course_id) REFERENCES course(id);
+
+ALTER TABLE lesson
+    ADD CONSTRAINT lesson_section_id_fk
+        FOREIGN KEY(section_id) REFERENCES section(id);
+
+
